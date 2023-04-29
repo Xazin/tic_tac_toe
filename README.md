@@ -16,6 +16,18 @@ _The below is a list of features that **could** be interesting to explore, and e
 - [ ] Variable amount of Players (Turn your game into a battle royale!) - Fits well with larger grids
 - [ ] Persistence Helpers
 
+## State mechanism
+
+The engine uses [ChangeNotifier](https://api.flutter.dev/flutter/foundation/ChangeNotifier-class.html)'s to offer updates on current game state and the scoreboard. This allows the consumer to only listen to what is relevant, eg. the scoreboard can be implemented separately based on just the updates from the game state.
+
+The game is controlled via one event only, which is the `makeMove` event. The controller feeds the event downwards to the game state manager, and the result of the move from the manager is returned back to the controller, which then accordingly updates the scoreboard.
+
+A simple diagram to illustrate the architecture is attached below, please note that it is not displayed for accuracy, but to illustrate how a consumer can use the game state and scoreboard separately.
+
+![Consumer view](.github/consuming.png)
+
+_If requested, a more accurate version of the state architecture can be drawn._
+
 # Notes
 
 Game Rules
