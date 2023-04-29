@@ -38,14 +38,8 @@ class TicTacToeStateCTRL extends TicTacToeState {
 
   void makeMove(int index) {
     /// Illegal move - someone is occupying this field
-    if (_board[index] != TicTacToePlayer.none) {
+    if (gameEnded || _board[index] != TicTacToePlayer.none) {
       return;
-    }
-
-    /// It's a draw
-    if (moves >= 9) {
-      moves++;
-      _endGame(TicTacToePlayer.none);
     }
 
     moves++;
