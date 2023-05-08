@@ -6,10 +6,19 @@ This project features a simple game engine for building Tic Tac Toe games. The p
 
 The below is a list of features that have been implemented.
 
+Pure dart engine:
+
 - [x] Built-in Scoreboard
 - [x] Configurable Rules (Number of Rows and Columns, Number of consecutive moves to win)
 - [x] Current Game Info (How many moves, which players turn)
 - [x] Game History
+
+Flutter widgets:
+
+- [x] TicTacToeBuilder - Simple builder widget that rebuilds on game state changes
+- [ ] TicTacToeView - Dynamic TicTacToe board built depending on game settings, and can be themed
+- [ ] TicTacToeScoreboard - Simple scoreboard
+- [ ] TicTacToeScoreboardOverlay - Simple scoreboard that can be shown/hid
 
 _The below is a list of features that **could** be interesting to explore, and expand the project with:_
 

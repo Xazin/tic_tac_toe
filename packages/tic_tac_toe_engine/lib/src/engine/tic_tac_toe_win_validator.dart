@@ -11,11 +11,10 @@ class WinValidator {
     int rows = 3,
     int columns = 3,
     int winCondition = 3,
-  }) : assert(winCondition <= rows || winCondition <= columns) {
-    _rows = rows;
-    _columns = columns;
-    _winCondition = winCondition;
-  }
+  })  : assert(winCondition <= rows || winCondition <= columns),
+        _rows = rows,
+        _columns = columns,
+        _winCondition = winCondition;
 
   int get winCondition => _winCondition;
 

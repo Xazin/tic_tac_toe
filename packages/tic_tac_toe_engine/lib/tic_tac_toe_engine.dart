@@ -1,5 +1,7 @@
 library tic_tac_toe_engine;
 
-export './engine/tic_tac_toe_controller.dart';
-export './engine/tic_tac_toe_state.dart';
-export './flutter/tic_ta_toe_builder.dart';
+export 'src/engine/tic_tac_toe_controller.dart';
+export 'src/engine/tic_tac_toe_state.dart' hide TicTacToeStateController;
+export 'src/engine/tic_tac_toe_player.dart';
+export 'src/engine/tic_tac_toe_scoreboard.dart';
+export 'src/flutter/tic_tac_toe_builder.dart';

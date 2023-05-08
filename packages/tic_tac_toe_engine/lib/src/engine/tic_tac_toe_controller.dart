@@ -1,5 +1,6 @@
-import 'package:tic_tac_toe_engine/engine/tic_tac_toe_scoreboard.dart';
 import 'package:tic_tac_toe_engine/tic_tac_toe_engine.dart';
+
+import 'tic_tac_toe_state.dart';
 
 /// Game Controller for TicTacToe
 ///
@@ -34,6 +35,6 @@ class TicTacToeController {
   /// Makes a move
   void makeMove(int index) => _gameState.makeMove(index);
 
-  /// Restarts current game manually
+  /// Restarts current game
   void restartGame() => _gameState.restartGame();
 }

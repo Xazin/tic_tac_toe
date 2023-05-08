@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:tic_tac_toe_engine/engine/tic_tac_toe_player.dart';
-import 'package:tic_tac_toe_engine/engine/tic_tac_toe_win_validator.dart';
+import 'package:tic_tac_toe_engine/src/engine/tic_tac_toe_player.dart';
+import 'package:tic_tac_toe_engine/src/engine/tic_tac_toe_win_validator.dart';
 
 /// State object for TicTacToe
 abstract class TicTacToeState extends ChangeNotifier {
