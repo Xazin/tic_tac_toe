@@ -7,23 +7,33 @@ class TicTacToeController {
   /// Scoreboard for the current controller
   final TicTacToeScoreboard scoreboard;
 
-  /// If set to true then once a winner is found
-  /// or no more moves can be made, the game will
-  /// restart itself.
-  ///
-  /// Use the [TicTacToeController.restart] method to
-  /// perform the game restart manually.
-  ///
-  final bool autoRestartGame = false;
-
   TicTacToeController({
     TicTacToeScoreboard? scoreboard,
+    int rows = 3,
+    int columns = 3,
+    int winCondition = 3,
+    bool autoRestartGame = false,
   })  : scoreboard = scoreboard ?? TicTacToeScoreboard(),
-        _gameState = TicTacToeStateCTRL();
+        _gameState = TicTacToeStateController(
+          autoRestartGame: autoRestartGame,
+          rows: rows,
+          columns: columns,
+          winCondition: winCondition,
+        ) {
+    _gameState.addListener(() {
+      if (_gameState.gameEnded) {
+        this.scoreboard.add(_gameState.winner!);
+      }
+    });
+  }
 
-  final TicTacToeStateCTRL _gameState;
+  final TicTacToeStateController _gameState;
 
   TicTacToeState get state => _gameState;
 
+  /// Makes a move
   void makeMove(int index) => _gameState.makeMove(index);
+
+  /// Restarts current game manually
+  void restartGame() => _gameState.restartGame();
 }

@@ -10,9 +10,7 @@ import 'package:tic_tac_toe_engine/engine/tic_tac_toe_player.dart';
 /// If the exact history of the games, who won when, is
 /// irrelevant, then instantiate using [draws], [playerOne],
 /// and [playerTwo], otherwise use [history]. Do not use
-/// both, as that can lead to confusing data.
-///
-/// Use-cases: Best out of # games, ranking players for a tournament
+/// both.
 ///
 class TicTacToeScoreboard extends ChangeNotifier {
   late final List<TicTacToePlayer> _history;
@@ -71,12 +69,5 @@ class TicTacToeScoreboard extends ChangeNotifier {
 
   void _addGames(int count, TicTacToePlayer player) {
     _history.addAll(List.generate(count, (_) => player));
-  }
-
-  /// TODO: Remove, just for testing
-  @override
-  void addListener(VoidCallback listener) {
-    super.addListener(listener);
-    debugPrint('[TicTacToeScoreboard.addListener] Listener added');
   }
 }

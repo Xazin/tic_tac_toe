@@ -25,6 +25,7 @@ class _GameViewState extends State<GameView> {
   void initState() {
     super.initState();
     gameController = TicTacToeController(
+      autoRestartGame: true,
       scoreboard: TicTacToeScoreboard(
         history: [
           TicTacToePlayer.none,
@@ -35,10 +36,6 @@ class _GameViewState extends State<GameView> {
         ],
       ),
     );
-
-    gameController.state.addListener(() {
-      setState(() {});
-    });
 
     gameController.scoreboard.addListener(() {
       if (mounted) {
@@ -70,11 +67,8 @@ class _GameViewState extends State<GameView> {
                 itemCount: 9,
                 itemBuilder: (context, index) {
                   return Padding(
-                    /// TODO: Customize padding
                     padding: const EdgeInsets.all(2.0),
                     child: Container(
-                      /// TODO: Customize margin
-                      // margin: const EdgeInsets.all(4),
                       color: Colors.orange.withOpacity(0.8),
                     ),
                   );
@@ -89,8 +83,10 @@ class _GameViewState extends State<GameView> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text('Draws: ${gameController.scoreboard.draws}'),
-                    Text('PlayerOne: ${gameController.scoreboard.playerOne}'),
-                    Text('PlayerTwo: ${gameController.scoreboard.playerTwo}'),
+                    Text(
+                        'Player 1 wins: ${gameController.scoreboard.playerOne}'),
+                    Text(
+                        'Player 2 wins: ${gameController.scoreboard.playerTwo}'),
                   ],
                 ),
                 const SizedBox(height: 15),
@@ -99,16 +95,46 @@ class _GameViewState extends State<GameView> {
                   children: [
                     TextButton(
                       onPressed: () {
-                        gameController.makeMove(7);
+                        /// 1 2 2
+                        /// 2 1 1
+                        /// 1 1 2
+                        gameController.makeMove(0); // Player 1
+                        gameController.makeMove(1); // Player 2
+                        gameController.makeMove(4); // Player 1
+                        gameController.makeMove(2); // Player 2
+                        gameController.makeMove(5); // Player 1
+                        gameController.makeMove(3); // Player 2
+                        gameController.makeMove(6); // Player 1
+                        gameController.makeMove(8); // Player 2
+                        gameController.makeMove(7); // Player 1
                       },
                       child: const Text('Draw!'),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        /// 1 2 0
+                        /// 2 1 0
+                        /// 0 0 1
+                        gameController.makeMove(0); // Player 1
+                        gameController.makeMove(3); // Player 2
+                        gameController.makeMove(4); // Player 1
+                        gameController.makeMove(1); // Player 2
+                        gameController.makeMove(8); // Player 1
+                      },
                       child: const Text('Player One!'),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        /// 1 1 0
+                        /// 2 2 2
+                        /// 1 0 0
+                        gameController.makeMove(0); // Player 1
+                        gameController.makeMove(3); // Player 2
+                        gameController.makeMove(1); // Player 1
+                        gameController.makeMove(4); // Player 2
+                        gameController.makeMove(6); // Player 1
+                        gameController.makeMove(5); // Player 2
+                      },
                       child: const Text('Player Two!'),
                     ),
                   ],
