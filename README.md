@@ -6,10 +6,10 @@ This project features a simple game engine for building Tic Tac Toe games. The p
 
 The below is a list of features that have been implemented.
 
-- [ ] Built-in Scoreboard
-- [ ] Configurable Rules (Number of Rows and Columns, Number of consecutive moves to win)
-- [ ] Current Game Info (Date of game start, how many moves, which players turn)
-- [ ] Game History
+- [x] Built-in Scoreboard
+- [x] Configurable Rules (Number of Rows and Columns, Number of consecutive moves to win)
+- [x] Current Game Info (How many moves, which players turn)
+- [x] Game History
 
 _The below is a list of features that **could** be interesting to explore, and expand the project with:_
 
