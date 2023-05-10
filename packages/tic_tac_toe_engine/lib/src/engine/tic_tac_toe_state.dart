@@ -7,6 +7,8 @@ abstract class TicTacToeState extends ChangeNotifier {
   /// Current board
   late List<TicTacToePlayer> _board;
 
+  List<TicTacToePlayer> get board => _board;
+
   /// Validator based on rules and playing field
   late final WinValidator _validator;
 
@@ -109,6 +111,10 @@ class TicTacToeStateController extends TicTacToeState {
 
     if (_gameEnded && autoRestartGame) {
       restartGame();
+    }
+
+    if (!_gameEnded && winningIsPossible) {
+      notifyListeners();
     }
   }
 

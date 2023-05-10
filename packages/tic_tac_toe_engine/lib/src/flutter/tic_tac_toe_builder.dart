@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_engine/engine/tic_tac_toe_scoreboard.dart';
 import 'package:tic_tac_toe_engine/tic_tac_toe_engine.dart';
 
 typedef TicTacToeWidgetBuilder = Widget Function(

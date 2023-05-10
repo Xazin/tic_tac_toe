@@ -23,7 +23,10 @@ class _GameViewState extends State<GameView> {
   void initState() {
     super.initState();
     gameController = TicTacToeController(
-      autoRestartGame: true,
+      autoRestartGame: false,
+      rows: 6,
+      columns: 6,
+      winCondition: 4,
       scoreboard: TicTacToeScoreboard(
         history: [
           TicTacToePlayer.none,
@@ -38,109 +41,59 @@ class _GameViewState extends State<GameView> {
 
   @override
   Widget build(BuildContext context) {
-    return TicTacToeBuilder(
-      controller: gameController,
-      builder: (context, state, scoreboard) => LayoutBuilder(
-        builder: (context, constraints) {
-          final isLarge = constraints.maxWidth > 420;
-          double minHeight = MediaQuery.of(context).size.height * 0.5;
-          if (minHeight < 300) minHeight = 300;
-
-          return Column(
-            children: [
-              const SizedBox(height: 50),
-              Expanded(
-                flex: 3,
-                child: SizedBox(
-                  width: isLarge ? minHeight : 320,
-                  height: isLarge ? minHeight : 320,
-                  child: GridView.builder(
-                    physics: const ClampingScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                    ),
-                    itemCount: 9,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Container(
-                          color: Colors.orange.withOpacity(0.8),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Expanded(
-                child: Column(
+    return Scaffold(
+      body: SafeArea(
+        child: TicTacToeBuilder(
+          controller: gameController,
+          builder: (context, state, scoreboard) {
+            return Column(
+              children: [
+                const SizedBox(height: 50),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('Draws: ${scoreboard.draws}'),
-                        Text('Player 1 wins: ${scoreboard.playerOne}'),
-                        Text('Player 2 wins: ${scoreboard.playerTwo}'),
-                      ],
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width,
+                      child: GridView.count(
+                        shrinkWrap: true,
+                        crossAxisCount: 6,
+                        children: List.generate(
+                          6 * 6,
+                          (index) => GestureDetector(
+                            onTap: () => gameController.makeMove(index),
+                            child: Container(
+                              margin: const EdgeInsets.all(1),
+                              color: Colors.blue,
+                              child: Center(
+                                child: Text(
+                                  gameController.state.board[index] ==
+                                          TicTacToePlayer.playerOne
+                                      ? 'X'
+                                      : gameController.state.board[index] ==
+                                              TicTacToePlayer.playerTwo
+                                          ? 'O'
+                                          : '',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            /// 1 2 2
-                            /// 2 1 1
-                            /// 1 1 2
-                            gameController.makeMove(0); // Player 1
-                            gameController.makeMove(1); // Player 2
-                            gameController.makeMove(4); // Player 1
-                            gameController.makeMove(2); // Player 2
-                            gameController.makeMove(5); // Player 1
-                            gameController.makeMove(3); // Player 2
-                            gameController.makeMove(6); // Player 1
-                            gameController.makeMove(8); // Player 2
-                            gameController.makeMove(7); // Player 1
-                          },
-                          child: const Text('Draw!'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            /// 1 2 0
-                            /// 2 1 0
-                            /// 0 0 1
-                            gameController.makeMove(0); // Player 1
-                            gameController.makeMove(3); // Player 2
-                            gameController.makeMove(4); // Player 1
-                            gameController.makeMove(1); // Player 2
-                            gameController.makeMove(8); // Player 1
-                          },
-                          child: const Text('Player One!'),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            /// 1 1 0
-                            /// 2 2 2
-                            /// 1 0 0
-                            gameController.makeMove(0); // Player 1
-                            gameController.makeMove(3); // Player 2
-                            gameController.makeMove(1); // Player 1
-                            gameController.makeMove(4); // Player 2
-                            gameController.makeMove(6); // Player 1
-                            gameController.makeMove(5); // Player 2
-                          },
-                          child: const Text('Player Two!'),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 15),
-                    Text('Current Player: ${state.currentPlayer}'),
                   ],
                 ),
-              ),
-            ],
-          );
-        },
+                const SizedBox(height: 50),
+                TextButton(
+                  onPressed: gameController.state.gameEnded
+                      ? () => gameController.restartGame()
+                      : null,
+                  child: const Text('New game'),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
