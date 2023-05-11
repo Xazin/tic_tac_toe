@@ -6,12 +6,14 @@ import '../../constants.dart';
 import 'widgets/animated_player.dart';
 
 class BoardView extends StatelessWidget {
+  final TicTacToeController gameController;
+  final bool isSmallView;
+
   const BoardView({
     super.key,
     required this.gameController,
+    this.isSmallView = false,
   });
-
-  final TicTacToeController gameController;
 
   @override
   Widget build(BuildContext context) {
@@ -29,11 +31,10 @@ class BoardView extends StatelessWidget {
               Expanded(
                 child: Center(
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 400),
+                    constraints:
+                        BoxConstraints(maxWidth: isSmallView ? 350 : 400),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40.0,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
                       child: Opacity(
                         opacity: gameController.state.gameEnded ? .7 : 1,
                         child: TicTacToeBoard(
@@ -59,20 +60,22 @@ class BoardView extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 30),
-          const Text(
+          Text(
             'Your move',
-            style: TextStyle(fontSize: 24),
+            style: TextStyle(
+              fontSize: isSmallView ? 20 : 24,
+            ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: isSmallView ? 10 : 20),
           Container(
-            padding: const EdgeInsets.all(14),
+            padding: EdgeInsets.all(isSmallView ? 10 : 14),
             decoration: BoxDecoration(
               color: const Color(0xFF252525),
               borderRadius: BorderRadius.circular(12),
             ),
             child: SvgPicture.asset(
               currentPlayerAsset,
-              width: 37,
+              width: isSmallView ? 32 : 37,
               colorFilter: const ColorFilter.mode(
                 Colors.white,
                 BlendMode.srcIn,

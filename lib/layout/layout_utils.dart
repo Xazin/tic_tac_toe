@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ScreenBreakpoints {
   static double desktop = 750;
-  static double tablet = 500;
+  static double tablet = 520;
   static double mobile = 300;
 }
 

@@ -12,11 +12,14 @@ class ScoreBox extends StatelessWidget {
 
   final bool unboundedWidth;
 
+  final bool isSmallBox;
+
   const ScoreBox({
     super.key,
     required this.score,
     this.player,
     this.unboundedWidth = true,
+    this.isSmallBox = false,
   });
 
   @override
@@ -24,7 +27,7 @@ class ScoreBox extends StatelessWidget {
     return ConstrainedBox(
       constraints: unboundedWidth
           ? const BoxConstraints()
-          : const BoxConstraints(maxWidth: 150),
+          : BoxConstraints(maxWidth: isSmallBox ? 100 : 150),
       child: Row(
         children: [
           Expanded(
@@ -36,21 +39,21 @@ class ScoreBox extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding: EdgeInsets.symmetric(vertical: isSmallBox ? 10 : 20),
                 child: Column(
                   children: [
                     Text(
                       score.toString(),
-                      style: const TextStyle(
-                        fontSize: 28,
+                      style: TextStyle(
+                        fontSize: isSmallBox ? 22 : 28,
                       ),
                     ),
-                    const SizedBox(height: 5),
+                    SizedBox(height: isSmallBox ? 2 : 5),
                     Text(
                       _refFromPlayer,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.5),
-                        fontSize: 18,
+                        fontSize: isSmallBox ? 14 : 18,
                       ),
                     ),
                   ],
