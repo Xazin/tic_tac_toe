@@ -16,14 +16,18 @@ Pure dart engine:
 Flutter widgets:
 
 - [x] TicTacToeBuilder - Simple builder widget that rebuilds on game state changes
-- [ ] TicTacToeView - Dynamic TicTacToe board built depending on game settings, and can be themed
-- [ ] TicTacToeScoreboard - Simple scoreboard
-- [ ] TicTacToeScoreboardOverlay - Simple scoreboard that can be shown/hid
+- [x] TicTacToeBoard - Dynamic TicTacToe board built depending on game settings, and can be styled
 
 _The below is a list of features that **could** be interesting to explore, and expand the project with:_
 
 - [ ] Variable amount of Players (Turn your game into a battle royale!) - Fits well with larger grids
 - [ ] Persistence Helpers
+
+## Project
+
+This project is the parent of the TicTacToe Engine itself, and showcases how a TicTacToe game can be built using the engine, and extending it.
+
+The project, and the Flutter widgets of the TicTacToe package, is built using this [Figma Design](https://www.figma.com/file/gwv7fHKOBBQAouYbYHlIk3/TicTacToe%3A-Example-Application?type=design&node-id=0%3A1&t=gnn7bTb7tCMLfwwX-1). Due to UI/UX constraints (as in the fact that I am not one), the complete design is in one page. The project is based on 3 resolutions, that will make it playable on Mobile, Tablet, Web, and Desktop.
 
 ## State mechanism
 

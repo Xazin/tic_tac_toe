@@ -8,6 +8,12 @@ class TicTacToeController {
   /// Scoreboard for the current controller
   final TicTacToeScoreboard scoreboard;
 
+  final int _rows;
+  int get rows => _rows;
+
+  final int _columns;
+  int get columns => _columns;
+
   TicTacToeController({
     TicTacToeScoreboard? scoreboard,
     int rows = 3,
@@ -15,6 +21,8 @@ class TicTacToeController {
     int winCondition = 3,
     bool autoRestartGame = false,
   })  : scoreboard = scoreboard ?? TicTacToeScoreboard(),
+        _rows = rows,
+        _columns = columns,
         _gameState = TicTacToeStateController(
           autoRestartGame: autoRestartGame,
           rows: rows,
