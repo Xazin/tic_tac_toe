@@ -124,7 +124,7 @@ class TicTacToeStateController extends TicTacToeState {
   }
 
   /// Can be used to load an existing board, eg. for
-  /// network games where an ongoing game might be
+  /// network games where an on-going game might be
   /// done over multiple app lifecycles.
   ///
   void updateBoard(List<TicTacToePlayer> newBoard) {
@@ -135,63 +135,65 @@ class TicTacToeStateController extends TicTacToeState {
   /// Used to update configuration without resetting
   /// the current board.
   ///
-  void updateConfiguration(TicTacToeConfig configuration) {
+  void updateConfiguration(TicTacToeConfig config) {
     // Modified rows
-    if (configuration.rows != _configuration.rows) {
-      if (configuration.rows > _configuration.rows) {
-        final difference = configuration.rows - _configuration.rows;
-
-        for (int i = 1; i == difference; i++) {
-          _board.addAll(
-            List.filled(
-              _configuration.columns,
-              TicTacToePlayer.none,
-            ),
-          );
-        }
-      } else if (configuration.rows < _configuration.rows) {
-        final difference = _configuration.rows - configuration.rows;
-
-        for (int i = 1; i == difference; i++) {
-          _board.removeRange(
-            _tiles - difference * _configuration.columns,
-            _tiles,
-          );
-        }
-      }
+    if (config.rows != _configuration.rows) {
+      _updateRows(config.rows);
     }
 
     // Modified columns
-    if (configuration.columns != _configuration.columns) {
-      if (configuration.columns > _configuration.columns) {
-        // Add columns
-        final difference = configuration.columns - _configuration.columns;
-
-        /// Use new rows since it should already be modified
-        final rows = configuration.rows;
-        for (int i = 1; i <= rows; i++) {
-          _board.insertAll(
-            i * _configuration.columns,
-            List.filled(difference, TicTacToePlayer.none),
-          );
-        }
-      } else if (configuration.columns < _configuration.columns) {
-        final difference = _configuration.columns - configuration.columns;
-
-        final rows = configuration.rows;
-        for (int i = 1; i <= rows; i++) {
-          _board.removeRange(
-            (i * _configuration.columns) - i * difference,
-            i * _configuration.columns - ((i - 1) * difference),
-          );
-        }
-      }
+    if (config.columns != _configuration.columns) {
+      _updateColumns(config.columns, config.rows);
     }
 
-    _configuration = configuration;
-    _validator = WinValidator(configuration: configuration);
+    _configuration = config;
+    _validator = WinValidator(configuration: config);
     _tiles = _configuration.rows * _configuration.columns;
 
     notifyListeners();
+  }
+
+  void _updateRows(int newRows) {
+    final difference = newRows > _configuration.rows
+        ? newRows - _configuration.rows
+        : _configuration.rows - newRows;
+
+    for (int i = 1; i == difference; i++) {
+      if (newRows > _configuration.rows) {
+        _board.addAll(
+          List.filled(
+            _configuration.columns,
+            TicTacToePlayer.none,
+          ),
+        );
+        continue;
+      }
+
+      _board.removeRange(
+        _tiles - difference * _configuration.columns,
+        _tiles,
+      );
+    }
+  }
+
+  void _updateColumns(int newColumns, int rows) {
+    final difference = newColumns > _configuration.columns
+        ? newColumns - _configuration.columns
+        : _configuration.columns - newColumns;
+
+    for (int i = 1; i <= rows; i++) {
+      if (newColumns > _configuration.columns) {
+        _board.insertAll(
+          i * _configuration.columns,
+          List.filled(difference, TicTacToePlayer.none),
+        );
+        continue;
+      }
+
+      _board.removeRange(
+        (i * _configuration.columns) - i * difference,
+        i * _configuration.columns - ((i - 1) * difference),
+      );
+    }
   }
 }

@@ -23,13 +23,11 @@ class SettingsDialog extends StatefulWidget {
 
 class _SettingsDialogState extends State<SettingsDialog> {
   late final TicTacToeController controller;
-  late bool autoRestartGame;
 
   @override
   void initState() {
     super.initState();
     controller = widget.controller;
-    autoRestartGame = controller.configuration.autoRestartGame;
   }
 
   @override
@@ -47,7 +45,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
           CheckboxListTile(
             contentPadding: EdgeInsets.zero,
             title: const Text('Auto restart game'),
-            value: autoRestartGame,
+            value: controller.configuration.autoRestartGame,
             onChanged: (newValue) {
               if (newValue == null) {
                 return;
@@ -61,9 +59,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
                 controller.restartGame();
               }
 
-              setState(() {
-                autoRestartGame = newValue;
-              });
+              setState(() {});
             },
           ),
           const SizedBox(height: 10),
@@ -190,9 +186,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
           TextButton(
             onPressed: controller.state.moves > 0
                 ? () {
-                    setState(() {
-                      controller.restartGame();
-                    });
+                    setState(() => controller.restartGame());
                   }
                 : null,
             child: const Text(
