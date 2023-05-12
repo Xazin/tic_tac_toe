@@ -1,5 +1,6 @@
-import 'package:tic_tac_toe_engine/engine/tic_tac_toe_scoreboard.dart';
 import 'package:tic_tac_toe_engine/tic_tac_toe_engine.dart';
+
+import 'tic_tac_toe_state.dart';
 
 /// Game Controller for TicTacToe
 ///
@@ -7,18 +8,19 @@ class TicTacToeController {
   /// Scoreboard for the current controller
   final TicTacToeScoreboard scoreboard;
 
+  TicTacToeConfig _configuration;
+  TicTacToeConfig get configuration => _configuration;
+
+  final TicTacToeStateController _gameState;
+  TicTacToeState get state => _gameState;
+
   TicTacToeController({
     TicTacToeScoreboard? scoreboard,
-    int rows = 3,
-    int columns = 3,
-    int winCondition = 3,
-    bool autoRestartGame = false,
+    TicTacToeConfig? configuration,
   })  : scoreboard = scoreboard ?? TicTacToeScoreboard(),
+        _configuration = configuration ?? TicTacToeConfig(),
         _gameState = TicTacToeStateController(
-          autoRestartGame: autoRestartGame,
-          rows: rows,
-          columns: columns,
-          winCondition: winCondition,
+          configuration: configuration ?? TicTacToeConfig(),
         ) {
     _gameState.addListener(() {
       if (_gameState.gameEnded) {
@@ -27,13 +29,14 @@ class TicTacToeController {
     });
   }
 
-  final TicTacToeStateController _gameState;
-
-  TicTacToeState get state => _gameState;
-
   /// Makes a move
   void makeMove(int index) => _gameState.makeMove(index);
 
-  /// Restarts current game manually
+  /// Restarts current game
   void restartGame() => _gameState.restartGame();
+
+  void updateConfiguration(TicTacToeConfig configuration) {
+    _configuration = configuration;
+    _gameState.updateConfiguration(configuration);
+  }
 }

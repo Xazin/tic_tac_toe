@@ -6,15 +6,28 @@ This project features a simple game engine for building Tic Tac Toe games. The p
 
 The below is a list of features that have been implemented.
 
+Pure dart engine:
+
 - [x] Built-in Scoreboard
 - [x] Configurable Rules (Number of Rows and Columns, Number of consecutive moves to win)
 - [x] Current Game Info (How many moves, which players turn)
 - [x] Game History
 
+Flutter widgets:
+
+- [x] TicTacToeBuilder - Simple builder widget that rebuilds on game state changes
+- [x] TicTacToeBoard - Dynamic TicTacToe board built depending on game settings, and can be styled
+
 _The below is a list of features that **could** be interesting to explore, and expand the project with:_
 
 - [ ] Variable amount of Players (Turn your game into a battle royale!) - Fits well with larger grids
 - [ ] Persistence Helpers
+
+## Project
+
+This project is the parent of the TicTacToe Engine itself, and showcases how a TicTacToe game can be built using the engine, and extending it.
+
+The project, and the Flutter widgets of the TicTacToe package, is built using this [Figma Design](https://www.figma.com/file/gwv7fHKOBBQAouYbYHlIk3/TicTacToe%3A-Example-Application?type=design&node-id=0%3A1&t=gnn7bTb7tCMLfwwX-1). Due to UI/UX constraints (as in the fact that I am not one), the complete design is in one page. The project is based on 3 resolutions, that will make it playable on Mobile, Tablet, Web, and Desktop.
 
 ## State mechanism
 
@@ -27,100 +40,3 @@ A simple diagram to illustrate the architecture is attached below, please note t
 ![Consumer view](.github/consuming.png)
 
 _If requested, a more accurate version of the state architecture can be drawn._
-
-# Notes
-
-Game Rules
-
-<!-- /// [0, 1, 2, 3, 4, ..8]
-///
-/// - At least 5 moves to a win (Impl. game state)
-/// - Win condition: 3 in a row (horizontal, vertical, diagonal)
-///
-/// - >= 9 Moves is a Draw
-///
-/// Player 1 & 2 - Notify which one is performing a move
-///
-
-/// Game Widgets
-/// - [GameBoard] Default GridView w/ Callbacks
-///
-/// Configurations/Customization:
-/// - Scoreboard (Overlay)
-/// - Players (O, X) - Animations
-/// - GameBoard (Padding, Borders, Background, Margin)
-/// - Size of Board - Derive constraints for children (Grid Tiles)
-/// - Interactions (onEnter, onExit, onPressed) -->
-
-Game Controller
-
-<!-- // class GameEngine {
-//   /// Notify about changes
-//   /// Consume events from outside
-//   /// Track state
-//   ///
-//   late final List<int> _board;
-
-//   GameEngine() {
-//     _board = List.generate(rows * cols, (_) => 0);
-//   }
-
-//   /// Listen to game end and then grab game state
-//   /// eg. who won (if any)
-//   ///
-//   final ValueNotifier<GameState> gameState = ValueNotifier(GameState.initial());
-
-//   /// Reset GameState
-//   void reset() {
-//     /// Change gameState to initial, but keep track of scores
-//   }
-
-//   Future<void> makeMove(int index) {
-//     /// Check if game is still running
-//     ///
-//     /// Check if index is occupied
-//     ///
-//     /// Change current player
-//     ///
-//     /// Check if game ended due to this move
-//   }
-
-//   /// Read from GameState
-//   int get _getPlayer => _isPlayerOne ? 1 : 2;
-// }
-
-// class GameState {
-//   List<int> board;
-//   List<int> scores;
-
-//   /// [0 = draws, 1 = Player 1 wins, 2 = Player 2 wins]
-//   bool isRunning;
-//   int? winner;
-//   bool isPlayerOne;
-// } -->
-
-Win Validation
-
-<!-- /// [0, 1, 2]
-/// [3, 4, 5]
-/// [6, 7, 8]
-///
-/// -1 = nothing changed
-///
-/// 0 = no state
-/// 1 = Player 1 (O)
-/// 2 = Player 2 (X)
-///
-// class WinValidator {
-//   static int gameEnded(List<int> currentMoveset) {
-//     /// Horizontal
-//     if (currentMoveset[0] == currentMoveset[1] &&
-//         currentMoveset[0] == currentMoveset[2]) {}
-
-//     /// Vertical
-
-//     /// Diagonal
-
-//     return -1;
-//   }
-// } -->

@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:tic_tac_toe_engine/engine/tic_tac_toe_player.dart';
+import 'package:tic_tac_toe_engine/src/engine/tic_tac_toe_player.dart';
 
 /// Holds statistics about simultaneous games.
 ///
