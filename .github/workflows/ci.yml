@@ -1,0 +1,41 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize]
+  workflow_dispatch:
+
+env:
+  flutter_version: "3.7.12"
+  flutter_channel: "stable"
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Cache Flutter
+        uses: actions/cache@v3
+        with:
+          path: /opt/hostedtoolcache/flutter
+          key: cache-flutter-${{ env.flutter_channel }}-${{ env.flutter_version}}-${{ runner.os }}
+
+      - name: Setup Environment
+        uses: subosito/flutter-action@v2
+        with:
+          channel: ${{ env.flutter_channel }}
+          flutter-version: ${{ env.flutter_version }}
+
+      - name: Get Dependencies
+        run: flutter pub get .
+
+      - name: Run formatter
+        run: flutter format --dry-run --set-exit-if-changed .
+
+      - name: Run analyzer
+        run: flutter analyze .
