@@ -3,13 +3,36 @@ import 'package:tic_tac_toe_engine/tic_tac_toe_engine.dart';
 
 import 'history_item.dart';
 
-class History extends StatelessWidget {
+class History extends StatefulWidget {
   final TicTacToeScoreboard scoreboard;
 
   const History({
     super.key,
     required this.scoreboard,
   });
+
+  @override
+  State<History> createState() => _HistoryState();
+}
+
+class _HistoryState extends State<History> {
+  late final ScrollController scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    scrollController = ScrollController();
+
+    widget.scoreboard.addListener(() {
+      if (widget.scoreboard.history.isNotEmpty && scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +52,14 @@ class History extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: scoreboard.history.isEmpty
+              child: widget.scoreboard.history.isEmpty
                   ? _noHistory()
                   : ListView.builder(
-                      itemCount: scoreboard.history.length,
+                      controller: scrollController,
+                      itemCount: widget.scoreboard.history.length,
                       itemBuilder: (context, index) {
-                        return HistoryItem(winner: scoreboard.history[index]);
+                        return HistoryItem(
+                            winner: widget.scoreboard.history[index]);
                       },
                     ),
             ),
