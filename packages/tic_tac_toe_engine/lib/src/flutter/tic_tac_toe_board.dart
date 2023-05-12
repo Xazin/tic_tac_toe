@@ -42,26 +42,26 @@ class TicTacToeBoard extends StatelessWidget {
       child: GridView.count(
         shrinkWrap: true,
         physics: physics,
-        crossAxisCount: gameController.columns,
+        crossAxisCount: gameController.configuration.columns,
         children: List.generate(
-          gameController.rows * gameController.columns,
+          gameController.configuration.rows *
+              gameController.configuration.columns,
           (index) {
             final st = relStyle(index);
 
-            return GestureDetector(
+            return GameTile(
               onTap: () => gameController.makeMove(index),
-              child: Container(
-                margin: st?.margin,
-                padding: st?.padding,
-                decoration: _tileDecoration(st),
-                child: _currentPlayerWidget(index),
-              ),
+              style: st,
+              child: _currentPlayerWidget(index),
             );
           },
         ),
       ),
     );
   }
+
+  TicTacToeStyle? relStyle(int index) =>
+      style ?? (styleBuilder != null ? styleBuilder!.call(index) : null);
 
   Widget? _currentPlayerWidget(int index) {
     final player = gameController.state.board[index];
@@ -75,9 +75,32 @@ class TicTacToeBoard extends StatelessWidget {
         return null;
     }
   }
+}
 
-  TicTacToeStyle? relStyle(int index) =>
-      style ?? (styleBuilder != null ? styleBuilder!.call(index) : null);
+class GameTile extends StatelessWidget {
+  final VoidCallback onTap;
+  final Widget? child;
+  final TicTacToeStyle? style;
+
+  const GameTile({
+    super.key,
+    this.style,
+    required this.onTap,
+    this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: style?.margin,
+        padding: style?.padding,
+        decoration: _tileDecoration(style),
+        child: child,
+      ),
+    );
+  }
 
   BoxDecoration? _tileDecoration(TicTacToeStyle? st) {
     if (st != null) {

@@ -15,6 +15,7 @@ class HistoryItem extends StatelessWidget {
       padding: const EdgeInsets.all(1.5),
       child: RichText(
         text: TextSpan(
+          style: const TextStyle(color: Colors.white),
           children: [
             TextSpan(
               text: winner == TicTacToePlayer.none ? '[DRAW] ' : '[WINNER] ',

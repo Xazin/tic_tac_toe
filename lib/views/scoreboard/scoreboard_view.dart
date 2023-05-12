@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_eng/views/scoreboard/widgets/history.dart';
 import 'package:tic_tac_toe_engine/tic_tac_toe_engine.dart';
 
+import 'widgets/history.dart';
 import 'widgets/scoreboard_boxes.dart';
 import 'widgets/settings_button.dart';
 

@@ -1,22 +1,14 @@
 import 'package:matrix2d/matrix2d.dart';
+import 'package:tic_tac_toe_engine/src/engine/tic_tac_toe_config.dart';
 
 import 'tic_tac_toe_player.dart';
 
 class WinValidator {
-  late final int _rows;
-  late final int _columns;
-  late final int _winCondition;
+  final TicTacToeConfig configuration;
 
   WinValidator({
-    int rows = 3,
-    int columns = 3,
-    int winCondition = 3,
-  })  : assert(winCondition <= rows || winCondition <= columns),
-        _rows = rows,
-        _columns = columns,
-        _winCondition = winCondition;
-
-  int get winCondition => _winCondition;
+    required this.configuration,
+  });
 
   /// Validate if there is a winner of a given board
   ///
@@ -27,25 +19,22 @@ class WinValidator {
   bool validate(List<TicTacToePlayer> board, int index) {
     final player = board[index];
 
-    if (_isStandardRules) {
+    if (configuration.isStandardRules) {
       return _wonByStandardRules(board, player);
     }
 
     return _wonByDynamicRules(board, index, player);
   }
 
-  bool get _isStandardRules =>
-      _columns == 3 && _rows == 3 && _winCondition == 3;
-
   bool _wonByDynamicRules(
     List<TicTacToePlayer> board,
     int index,
     TicTacToePlayer player,
   ) {
-    final twoDBoard = board.reshape(_rows, _columns);
+    final twoDBoard = board.reshape(configuration.rows, configuration.columns);
 
     /// Y Coordinate of current move in a 2D Array
-    final y = index % _columns;
+    final y = index % configuration.columns;
 
     bool wonInARow = false;
     bool wonInAColumn = false;
@@ -60,7 +49,7 @@ class WinValidator {
       if (twoDBoard[i][y] == player) {
         inAColumn++;
 
-        if (inAColumn >= _winCondition) {
+        if (inAColumn >= configuration.winCondition) {
           wonInAColumn = true;
           break;
         }
@@ -74,7 +63,7 @@ class WinValidator {
         if (twoDBoard[i][j] == player) {
           inARow++;
 
-          if (inARow >= _winCondition) {
+          if (inARow >= configuration.winCondition) {
             wonInARow = true;
             break;
           }
@@ -82,11 +71,11 @@ class WinValidator {
           inARow = 0;
         }
 
-        if (_winCondition <= twoDBoard.length - i) {
+        if (configuration.winCondition <= twoDBoard.length - i) {
           // Diagonal Check from top-left to bottom-right
-          if (_winCondition <= twoDBoard[i].length - j) {
+          if (configuration.winCondition <= twoDBoard[i].length - j) {
             bool diagonalWin = true;
-            for (int k = 0; k < _winCondition; k++) {
+            for (int k = 0; k < configuration.winCondition; k++) {
               if (twoDBoard[i + k][j + k] != player) {
                 diagonalWin = false;
                 break;
@@ -100,9 +89,9 @@ class WinValidator {
           }
 
           // Diagonal Check from top-right to bottom-left
-          if (_winCondition <= j + 1) {
+          if (configuration.winCondition <= j + 1) {
             bool diagonalWin = true;
-            for (int k = 0; k < _winCondition; k++) {
+            for (int k = 0; k < configuration.winCondition; k++) {
               if (twoDBoard[i + k][j - k] != player) {
                 diagonalWin = false;
                 break;

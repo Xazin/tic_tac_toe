@@ -5,9 +5,7 @@ void main() {
   group('Dynamic rules win validator', () {
     test('Horizontal win', () {
       final gameController = TicTacToeController(
-        rows: 6,
-        columns: 6,
-        winCondition: 4,
+        configuration: TicTacToeConfig(rows: 6, columns: 6, winCondition: 4),
       );
 
       expect(gameController.state.gameEnded, false);
@@ -63,9 +61,7 @@ void main() {
 
     test('Vertical win', () {
       final gameController = TicTacToeController(
-        rows: 6,
-        columns: 6,
-        winCondition: 4,
+        configuration: TicTacToeConfig(rows: 6, columns: 6, winCondition: 4),
       );
 
       expect(gameController.state.gameEnded, false);
@@ -121,9 +117,7 @@ void main() {
 
     test('Diagonal win', () {
       final gameController = TicTacToeController(
-        rows: 6,
-        columns: 6,
-        winCondition: 4,
+        configuration: TicTacToeConfig(rows: 6, columns: 6, winCondition: 4),
       );
 
       expect(gameController.state.gameEnded, false);

@@ -38,12 +38,24 @@ class BoardView extends StatelessWidget {
                       child: Opacity(
                         opacity: gameController.state.gameEnded ? .7 : 1,
                         child: TicTacToeBoard(
-                          styleBuilder: (index) => TicTacToeStyle(
-                            tileDecoration: BoxDecoration(
-                              border:
-                                  TicTacToeStyle.standardBorderFromIndex(index),
-                            ),
-                          ),
+                          styleBuilder:
+                              gameController.configuration.isStandardRules
+                                  ? (index) => TicTacToeStyle(
+                                        tileDecoration: BoxDecoration(
+                                          border: TicTacToeStyle
+                                              .standardBorderFromIndex(index),
+                                        ),
+                                      )
+                                  : null,
+                          style: gameController.configuration.isStandardRules
+                              ? null
+                              : TicTacToeStyle(
+                                  margin: const EdgeInsets.all(2),
+                                  tileDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.orange,
+                                  ),
+                                ),
                           gameController: gameController,
                           playerOne: const AnimatedPlayer(
                             player: TicTacToePlayer.playerOne,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe_engine/tic_tac_toe_engine.dart';
 
+import '../../settings_view.dart';
+
 class SettingsButton extends StatelessWidget {
   final TicTacToeController controller;
 
@@ -17,9 +19,7 @@ class SettingsButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
-          onTap: () {
-            // TODO(Mathias): Open Settings
-          },
+          onTap: () => showSettingsDialog(context, controller),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
             child: Row(
